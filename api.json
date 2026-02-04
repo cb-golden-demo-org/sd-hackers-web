@@ -9,6 +9,18 @@
     },
     "host": "localhost:8080",
     "basePath": "/api",
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "X-API-Key",
+            "in": "header"
+        }
+    },
+    "security": [
+        {
+            "ApiKeyAuth": []
+        }
+    ],
     "paths": {
         "/stories/{type}": {
             "get": {
@@ -36,6 +48,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "array",
+                            "maxItems": 500,
                             "items": {
                                 "$ref": "#/definitions/main.Story"
                             }
