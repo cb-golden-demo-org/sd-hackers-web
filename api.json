@@ -9,6 +9,19 @@
     },
     "host": "localhost:8080",
     "basePath": "/api",
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter JWT Bearer token in the format: Bearer {token}"
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
     "paths": {
         "/stories/{type}": {
             "get": {
@@ -23,6 +36,11 @@
                     "stories"
                 ],
                 "summary": "Get stories",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -36,6 +54,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "array",
+                            "maxItems": 500,
                             "items": {
                                 "$ref": "#/definitions/main.Story"
                             }
