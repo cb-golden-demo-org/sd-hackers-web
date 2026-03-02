@@ -18,7 +18,7 @@ jobs:
         kind: test
         uses: docker://node:lts
         run: |
-          npm ci
+          npm install --legacy-peer-deps
           npm run test:unit
           npx jest --coverage >> $CLOUDBEES_OUTPUTS/CODE_COVERAGE
       - name: Publish test results
