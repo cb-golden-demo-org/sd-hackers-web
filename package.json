@@ -10,9 +10,9 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^1.7.0",
     "buefy": "^0.8.2",
-    "core-js": "^2.6.5",
+    "core-js": "^3.39.0",
     "node-gyp": "^10.2.0",
     "rox-browser": "6.0.0",
     "vue": "^2.6.10",
@@ -42,5 +42,14 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.6.10"
+  },
+  "resolutions": {
+    "handlebars": "^4.7.9",
+    "ejs": "^3.1.10",
+    "elliptic": "^6.6.1",
+    "loader-utils": "^3.3.1",
+    "braces": "^3.0.3",
+    "micromatch": "^4.0.8",
+    "json5": "^2.2.3"
   }
 }
