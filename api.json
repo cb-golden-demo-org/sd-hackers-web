@@ -1,5 +1,5 @@
 {
-    "schemes": [],
+    "schemes": ["https"],
     "swagger": "2.0",
     "info": {
         "description": "A simple API that mirrors Hacker News content",
@@ -9,6 +9,16 @@
     },
     "host": "localhost:8080",
     "basePath": "/api",
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "security": [
+        {"BearerAuth": []}
+    ],
     "paths": {
         "/stories/{type}": {
             "get": {
@@ -23,6 +33,7 @@
                     "stories"
                 ],
                 "summary": "Get stories",
+                "security": [{"BearerAuth": []}],
                 "parameters": [
                     {
                         "type": "string",
@@ -36,6 +47,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "array",
+                            "maxItems": 500,
                             "items": {
                                 "$ref": "#/definitions/main.Story"
                             }
