@@ -33,6 +33,18 @@ jobs:
             ## Test code coverage
             ${{ steps.RunUnitTest.outputs.CODE_COVERAGE }}
           format: MARKDOWN
+      - name: Failure
+        if: ${{ failure() }}
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "Running Failure Step anyway"
+      - name: Always
+        if: ${{ always() }}
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "Running Failure Step anyway"
   build:
     uses: cb-golden-demo-org/sd-hackers-workflows/container-build.yaml
     vars: inherit
