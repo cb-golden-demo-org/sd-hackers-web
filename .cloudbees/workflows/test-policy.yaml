@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    runs-on: on-prem
+    runs-on: self-hosted
     steps:
       - uses: cloudbees-io/checkout@v1
         name: Get source code
