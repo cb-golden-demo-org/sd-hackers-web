@@ -12,8 +12,6 @@ jobs:
     steps:
       - uses: cloudbees-io/checkout@v1
         name: Get source code
-        with:
-          repository: ${{ inputs.repo }}
       - name: Run unit tests
         id: RunUnitTest
         kind: test
