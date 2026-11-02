@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
+    runs-on: on-prem
     uses: cb-golden-demo-org/sd-hackers-workflows/basic-test.yaml
     vars: inherit
     secrets: inherit
