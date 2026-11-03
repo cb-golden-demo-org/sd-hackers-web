@@ -8,11 +8,43 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    uses: cb-golden-demo-org/sd-hackers-workflows/basic-test.yaml
-    vars: inherit
-    secrets: inherit
-    with:
-      repo: cb-golden-demo-org/sd-hackers-web
+    steps:
+      - uses: cloudbees-io/checkout@v1
+        name: Get source code
+      - name: Run unit tests
+        id: RunUnitTest
+        kind: test
+        uses: docker://node:lts
+        run: |
+          npm ci
+          npm run test:unit
+          npx jest --coverage >> $CLOUDBEES_OUTPUTS/CODE_COVERAGE
+      - name: Publish test results
+        uses: cloudbees-io/publish-test-results@v1
+        with:
+          test-type: JUnit
+          folder-name: ${{ cloudbees.workspace }}/junit.xml
+      - name: Sonar SAST
+        uses: cloudbees-io/sonarqube-bundled-sast-scan-code@v2
+        kind: scan
+        with:
+          language: JAVASCRIPT
+      - name: Publish evidence
+        uses: cloudbees-io/publish-evidence-item@v1
+        with:
+          content: |-
+            ## Test code coverage
+            ${{ steps.RunUnitTest.outputs.CODE_COVERAGE }}
+          format: MARKDOWN
+      - id: always
+        name: Always
+        if: ${{ always() }}
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "Always running this Step anyway"
+    outputs:
+      CODE_COVERAGE: ${{ steps.RunUnitTest.outputs.CODE_COVERAGE }}
   build:
     needs: test
     steps:
